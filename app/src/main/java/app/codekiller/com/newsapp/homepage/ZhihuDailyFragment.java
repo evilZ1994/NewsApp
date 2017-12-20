@@ -20,7 +20,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
 
     public ZhihuDailyFragment() {
-        // Required empty public constructor
+
     }
 
     public static ZhihuDailyFragment newInstance(){
@@ -35,8 +35,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_zhihu_daily, container, false);
+        View view = inflater.inflate(R.layout.fragment_zhihu_daily, container, false);
+
+        return view;
     }
 
     @Override
