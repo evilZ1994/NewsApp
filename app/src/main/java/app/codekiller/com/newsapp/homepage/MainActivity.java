@@ -1,5 +1,8 @@
 package app.codekiller.com.newsapp.homepage;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.service.CacheService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private MainFragment mainFragment;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initView();
+
+        //启动数据缓存服务
+        startService(new Intent(this, CacheService.class));
 
         //恢复fragment的状态
         if (savedInstanceState != null){
@@ -109,5 +116,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (favoritesFragment.isAdded()){
             getSupportFragmentManager().putFragment(outState, "FavoritesFragment", favoritesFragment);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo serviceInfo : manager.getRunningServices(Integer.MAX_VALUE)){
+            if (CacheService.class.getName().equals(serviceInfo.service.getClassName())){
+                stopService(new Intent(this, CacheService.class));
+            }
+        }
+        super.onDestroy();
     }
 }

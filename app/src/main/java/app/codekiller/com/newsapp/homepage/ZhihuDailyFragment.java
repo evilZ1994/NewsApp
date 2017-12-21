@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import app.codekiller.com.newsapp.R;
 import app.codekiller.com.newsapp.adapter.ZhihuDailyNewsAdapter;
@@ -25,6 +26,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     private ZhihuDailyNewsAdapter adapter;
     private ZhihuDailyContract.Presenter presenter;
@@ -49,6 +51,8 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
         initViews(view);
 
+        presenter.loadPosts(new Date().getTime(), true);
+
         return view;
     }
 
@@ -63,6 +67,17 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     public void initViews(View view) {
         refreshLayout = view.findViewById(R.id.refresh_layout);
         recyclerView = view.findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        /*adapter = new ZhihuDailyNewsAdapter(getContext(), new ArrayList<ZhihuDailyNews.Question>());
+        recyclerView.setAdapter(adapter);*/
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.loadPosts(new Date().getTime(), true);
+            }
+        });
     }
 
     @Override
@@ -77,7 +92,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     @Override
     public void stopLoading() {
-
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
