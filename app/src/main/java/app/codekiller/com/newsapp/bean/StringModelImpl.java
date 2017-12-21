@@ -29,7 +29,7 @@ public class StringModelImpl {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onErro(error);
+                listener.onError(error);
             }
         });
         VolleySingleton.getVolleySingleton(context).addToRequestQueue(request);

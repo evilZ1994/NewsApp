@@ -17,5 +17,5 @@ public interface OnStringListener {
      * 请求失败时回调
      * @param error
      */
-    void onErro(VolleyError error);
+    void onError(VolleyError error);
 }

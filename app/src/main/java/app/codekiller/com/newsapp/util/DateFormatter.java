@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Lollipop on 2017/12/19.
  */
 
-public class DateFormat {
+public class DateFormatter {
     /**
      * 将long类date转换为String类型
      * @param date date
