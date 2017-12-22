@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.util.MyWebViewClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,13 +107,7 @@ public class DetailFragment extends Fragment implements DetailContract.View{
         //开启application Cache功能
         webView.getSettings().setAppCacheEnabled(false);
 
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                presenter.openUrl(view, url);
-                return true;
-            }
-        });
+        webView.setWebViewClient(new MyWebViewClient());
     }
 
     @Override

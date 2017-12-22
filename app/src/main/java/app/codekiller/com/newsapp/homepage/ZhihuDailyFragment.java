@@ -69,9 +69,8 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         recyclerView = view.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        /*adapter = new ZhihuDailyNewsAdapter(getContext(), new ArrayList<ZhihuDailyNews.Question>());
-        recyclerView.setAdapter(adapter);*/
 
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
