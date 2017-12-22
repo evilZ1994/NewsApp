@@ -99,5 +99,6 @@
     <string name="navigation_drawer_open">open</string>
     <string name="feel_lucky">feel_lucky</string>
     <string name="loading_more">Loading more...</string>
+    <string name="share">Share</string>
     <!-- others end -->
 </resources>

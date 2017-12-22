@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.StringModelImpl;
 import app.codekiller.com.newsapp.bean.ZhihuDailyNews;
 import app.codekiller.com.newsapp.db.DatabaseHelper;
@@ -154,7 +155,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void startReading(int position) {
-
+        context.startActivity(new Intent(context, DetailActivity.class)
+                .putExtra("type", BeanType.TYPE_ZHIHU)
+                .putExtra("id", list.get(position).getId())
+                .putExtra("title", list.get(position).getTitle())
+                .putExtra("coverUrl", list.get(position).getImages().get(0)));
     }
 
     @Override
