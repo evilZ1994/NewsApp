@@ -15,29 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.codekiller.com.newsapp.R;
-import app.codekiller.com.newsapp.bean.ZhihuDailyNews;
+import app.codekiller.com.newsapp.bean.BaseBean;
+import app.codekiller.com.newsapp.bean.Douban;
 import app.codekiller.com.newsapp.interfaze.OnRecyclerViewItemClickListener;
 
 /**
  * Created by R2D2 on 2017/12/21.
  */
 
-public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter {
+public class NewsRecyclerAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private List<ZhihuDailyNews.Question> list = new ArrayList<>();
+    private List<BaseBean> list = new ArrayList<>();
     private OnRecyclerViewItemClickListener mListener;
+    private String type;
 
     //文字+图片
     private static final int TYPE_NORMAL = 0;
     //footer加载更多
     private static final int TYPE_FOOTER = 1;
 
-    public ZhihuDailyNewsAdapter(Context context, List<ZhihuDailyNews.Question> list){
+    public static final String ZHIHU = "zhihu";
+    public static final String GUOKR = "guokr";
+    public static final String DOUBAN = "douban";
+
+    public NewsRecyclerAdapter(Context context, List<BaseBean> list, String type){
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(context);
+        this.type = type;
     }
 
     @Override
@@ -54,12 +61,21 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NormalViewHolder){
-            ZhihuDailyNews.Question item = list.get(position);
-            if (item.getImages().get(0) == null){
+            BaseBean item = list.get(position);
+            String image = null;
+            if (type.equals(DOUBAN)){
+                List<Douban.PostsBean.ThumbsBean> thumbs = ((Douban.PostsBean) item).getThumbs();
+                if (thumbs.size()>0){
+                    image = thumbs.get(0).getMedium().getUrl();
+                }
+            }else {
+                image = item.getImages().get(0);
+            }
+            if (image == null){
                 ((NormalViewHolder)holder).itemImg.setImageResource(R.drawable.placeholder);
             } else {
                 Glide.with(context)
-                        .load(item.getImages().get(0))
+                        .load(image)
                         .asBitmap()
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -73,16 +89,20 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        //加上footer
-        return list.size()+1;
+        if (type.equals(GUOKR)){
+            return list.size();
+        } else {
+            //加上footer
+            return list.size() + 1;
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == list.size()){
-            return ZhihuDailyNewsAdapter.TYPE_FOOTER;
+            return NewsRecyclerAdapter.TYPE_FOOTER;
         }
-        return ZhihuDailyNewsAdapter.TYPE_NORMAL;
+        return NewsRecyclerAdapter.TYPE_NORMAL;
     }
 
     public class NormalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

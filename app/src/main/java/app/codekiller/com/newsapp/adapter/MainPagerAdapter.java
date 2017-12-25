@@ -43,4 +43,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
     }
+
+    public List<Fragment> getFragments() {
+        return fragments;
+    }
 }

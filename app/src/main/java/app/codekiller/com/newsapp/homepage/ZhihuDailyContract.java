@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import app.codekiller.com.newsapp.BasePresenter;
 import app.codekiller.com.newsapp.BaseView;
+import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.ZhihuDailyNews;
 
 /**
@@ -19,7 +20,7 @@ public interface ZhihuDailyContract {
         //显示停止正在加载
         void stopLoading();
         //成功获取到数据后在界面中显示
-        void showResults(ArrayList<ZhihuDailyNews.Question> list);
+        void showResults(ArrayList<BaseBean> list);
         //显示用于加载指定日期的date picker dialog
         void showPickDialog();
     }

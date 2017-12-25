@@ -11,4 +11,7 @@
 
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="menuTextColor">#616161</color>
 </resources>

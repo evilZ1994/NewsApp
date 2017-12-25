@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static DatabaseHelper getInstance(Context context){
         if (databaseHelper == null){
-            return new DatabaseHelper(context, "news", null, 1);
+            return new DatabaseHelper(context, "news", null, 4);
         }
 
         return databaseHelper;
@@ -37,6 +37,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("create table if not exists Guokr("
+                + "id integer primary key autoincrement,"
+                + "guokr_id integer not null,"
+                + "guokr_news text,"
+                + "guokr_content text,"
+                + "favorite integer default 0)");
 
+        sqLiteDatabase.execSQL("create table if not exists Douban("
+                + "id integer primary key autoincrement,"
+                + "douban_id integer not null,"
+                + "douban_news text,"
+                + "douban_content text,"
+                + "favorite integer default 0)");
     }
 }

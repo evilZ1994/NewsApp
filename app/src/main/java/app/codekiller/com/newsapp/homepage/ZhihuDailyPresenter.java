@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.StringModelImpl;
 import app.codekiller.com.newsapp.bean.ZhihuDailyNews;
@@ -42,7 +43,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
 
-    private ArrayList<ZhihuDailyNews.Question> list = new ArrayList<>();
+    private ArrayList<BaseBean> list = new ArrayList<>();
 
     public ZhihuDailyPresenter(Context context, ZhihuDailyContract.View view){
         this.context = context;
@@ -150,7 +151,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void loadMore(long date) {
-
+        loadPosts(date, false);
     }
 
     @Override

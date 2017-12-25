@@ -100,5 +100,12 @@
     <string name="feel_lucky">feel_lucky</string>
     <string name="loading_more">Loading more...</string>
     <string name="share">Share</string>
+    <string name="menu">menu</string>
+    <string name="action_copy_text">Copy Text</string>
+    <string name="action_share_as_text">Share as Text</string>
+    <string name="cancel_favorite">Cancel Favorite</string>
+    <string name="share_extra">shared from NewsApp</string>
+    <string name="text_copied">Text Copied</string>
+    <string name="add_to_favorite">Add to Favorite</string>
     <!-- others end -->
 </resources>

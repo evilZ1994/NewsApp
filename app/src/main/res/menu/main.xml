@@ -4,5 +4,7 @@
     <item
         android:title="@string/feel_lucky"
         android:id="@+id/action_feel_lucky"
-        app:showAsAction="never"/>
+        android:icon="@drawable/ic_free_breakfast_white_48px"
+        app:showAsAction="always"
+        android:orderInCategory="100"/>
 </menu>

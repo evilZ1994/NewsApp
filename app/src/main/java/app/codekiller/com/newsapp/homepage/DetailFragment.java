@@ -1,28 +1,26 @@
 package app.codekiller.com.newsapp.homepage;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -172,7 +170,7 @@ public class DetailFragment extends Fragment implements DetailContract.View{
 
     @Override
     public void showTextCopied() {
-
+        Toast.makeText(getContext(), R.string.text_copied, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -182,12 +180,12 @@ public class DetailFragment extends Fragment implements DetailContract.View{
 
     @Override
     public void showAddedToBookmarks() {
-
+        Toast.makeText(getContext(), R.string.add_to_favorite, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showDeletedFromBookmarks() {
-
+        Toast.makeText(getContext(), R.string.cancel_favorite, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -198,11 +196,69 @@ public class DetailFragment extends Fragment implements DetailContract.View{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             getActivity().onBackPressed();
-            Log.i("test", "back pressed");
-        }
+        } else if (id == R.id.menu) {
 
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+
+            View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+
+            if (presenter.queryIfIsBookmarked()) {
+                ((TextView) view.findViewById(R.id.textView)).setText(R.string.cancel_favorite);
+                ((ImageView) view.findViewById(R.id.imageView))
+                        .setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            }
+
+            // add to bookmarks or delete from bookmarks
+            view.findViewById(R.id.layout_bookmark).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.addToOrDeleteFromBookmarks();
+                }
+            });
+
+            // copy the article's link to clipboard
+            view.findViewById(R.id.layout_copy_link).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyLink();
+                }
+            });
+
+            // open the link in browser
+            view.findViewById(R.id.layout_open_in_browser).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.openInBrowser();
+                }
+            });
+
+            // copy the text content to clipboard
+            view.findViewById(R.id.layout_copy_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyText();
+                }
+            });
+
+            // shareAsText the content as text
+            view.findViewById(R.id.layout_share_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.shareAsText();
+                }
+            });
+
+            dialog.setContentView(view);
+            dialog.show();
+        }
         return true;
     }
 }
