@@ -82,7 +82,7 @@ public class FavoritePresenter implements FavoriteConstract.Presenter {
 
         cursor = database.query("Douban", null, "favorite=?", new String[]{"1"}, null, null, null);
         if (cursor.getCount() > 0){
-            types.add(FavoritesRecyclerAdapter.TYPE_DOUBAN_NORMAL);
+            types.add(FavoritesRecyclerAdapter.TYPE_DOUBAN_HEADER);
             if (cursor.moveToFirst()){
                 Douban.PostsBean postsBean = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_news")), Douban.PostsBean.class);
                 doubanList.add(postsBean);

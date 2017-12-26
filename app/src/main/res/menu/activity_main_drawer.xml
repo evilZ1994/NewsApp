@@ -17,6 +17,12 @@
             android:title="@string/favorites" />
 
         <item
+            android:id="@+id/change_theme"
+            android:enabled="true"
+            android:icon="@drawable/ic_brightness_medium_black_24px"
+            android:title="Change Theme"/>
+
+        <item
             android:id="@+id/nav_info"
             android:enabled="true"
             android:icon="@drawable/ic_info_outline_black_24dp"

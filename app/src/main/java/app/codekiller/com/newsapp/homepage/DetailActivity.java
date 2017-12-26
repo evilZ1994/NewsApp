@@ -10,7 +10,6 @@ import app.codekiller.com.newsapp.bean.BeanType;
 
 public class DetailActivity extends AppCompatActivity {
     private DetailFragment detailFragment;
-    private DetailPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        presenter = new DetailPresenter(this, detailFragment);
+        DetailPresenter presenter = new DetailPresenter(this, detailFragment);
         presenter.setType((BeanType) intent.getSerializableExtra("type"));
         presenter.setId(intent.getIntExtra("id", 0));
         presenter.setTitle(intent.getStringExtra("title"));
@@ -35,8 +34,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         if (detailFragment.isAdded()){
             getSupportFragmentManager().putFragment(outState, "DetailFragment", detailFragment);
         }

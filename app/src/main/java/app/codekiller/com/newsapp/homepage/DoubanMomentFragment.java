@@ -73,7 +73,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
                 int totalCount = layoutManager.getItemCount();
                 if (lastVisibleItem == (totalCount-1)){
                     Calendar calendar = Calendar.getInstance();
-                    calendar.set(mYear, mMonth, mDay);
+                    calendar.set(mYear, mMonth, --mDay);
                     presenter.loadMore(calendar.getTimeInMillis());
                 }
                 super.onScrollStateChanged(recyclerView, newState);

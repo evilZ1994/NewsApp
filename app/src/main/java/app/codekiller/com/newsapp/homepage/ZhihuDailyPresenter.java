@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
@@ -165,6 +166,8 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void feelLucky() {
-
+        if (list!=null && list.size()>0){
+            startReading(new Random().nextInt(list.size()));
+        }
     }
 }

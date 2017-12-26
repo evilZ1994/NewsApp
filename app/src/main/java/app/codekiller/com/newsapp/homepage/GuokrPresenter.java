@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
@@ -111,7 +112,9 @@ public class GuokrPresenter implements GuokrContract.Presenter{
 
     @Override
     public void feelLucky() {
-
+        if (resultBeans!=null && resultBeans.size()>0){
+            startReading(new Random().nextInt(resultBeans.size()));
+        }
     }
 
     private boolean queryIfIdExists(int id){

@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
@@ -121,7 +122,9 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
 
     @Override
     public void feelLucky() {
-
+        if (beans!=null && beans.size()>0){
+            startReading(new Random().nextInt(beans.size()));
+        }
     }
 
     private boolean queryIfIdExists(int id){

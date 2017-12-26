@@ -105,4 +105,10 @@ public class FavoritesFragment extends Fragment implements FavoriteConstract.Vie
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadData(true);
+    }
 }

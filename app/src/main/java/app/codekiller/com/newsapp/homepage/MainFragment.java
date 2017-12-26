@@ -142,7 +142,7 @@ public class MainFragment extends Fragment {
         FragmentManager manager = getChildFragmentManager();
         manager.putFragment(outState, "ZhihuDailyFragment", zhihuDailyFragment);
         manager.putFragment(outState, "GuokrFragment", guokrFragment);
-        manager.putFragment(outState, "DoubanFragment", doubanMomentFragment);
+        manager.putFragment(outState, "DoubanMomentFragment", doubanMomentFragment);
     }
 
     private void feelLucky() {
