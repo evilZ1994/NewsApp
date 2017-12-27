@@ -75,7 +75,9 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showLoading() {
-
+        if (!refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(true);
+        }
     }
 
     @Override

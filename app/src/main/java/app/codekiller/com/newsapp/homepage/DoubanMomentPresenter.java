@@ -23,6 +23,7 @@ import app.codekiller.com.newsapp.interfaze.OnStringListener;
 import app.codekiller.com.newsapp.service.CacheService;
 import app.codekiller.com.newsapp.util.Api;
 import app.codekiller.com.newsapp.util.DateFormatter;
+import app.codekiller.com.newsapp.util.NetworkState;
 
 /**
  * Created by R2D2 on 2017/12/20.
@@ -71,43 +72,57 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
 
     @Override
     public void loadPosts(long date, boolean clearing) {
-        view.startLoading();
+        view.showLoading();
         if (clearing){
             beans.clear();
         }
-        model.load(Api.DOUBAN_MOMENT + new DateFormatter().DoubanDateFormat(date), new OnStringListener() {
-            @Override
-            public void onSuccess(String result) {
-                Douban douban = gson.fromJson(result, Douban.class);
-                for(Douban.PostsBean bean : douban.getPosts()){
-                    beans.add(bean);
-                    if (!queryIfIdExists(bean.getId())){
-                        database.beginTransaction();
-                        ContentValues values = new ContentValues();
-                        values.put("douban_id", bean.getId());
-                        values.put("douban_news", gson.toJson(bean));
-                        values.put("douban_content", "");
-                        database.insert("Douban", null, values);
-                        database.setTransactionSuccessful();
-                        database.endTransaction();
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.DOUBAN_MOMENT + new DateFormatter().DoubanDateFormat(date), new OnStringListener() {
+                @Override
+                public void onSuccess(String result) {
+                    Douban douban = gson.fromJson(result, Douban.class);
+                    for (Douban.PostsBean bean : douban.getPosts()) {
+                        beans.add(bean);
+                        if (!queryIfIdExists(bean.getId())) {
+                            database.beginTransaction();
+                            ContentValues values = new ContentValues();
+                            values.put("douban_id", bean.getId());
+                            values.put("douban_news", gson.toJson(bean));
+                            values.put("douban_content", "");
+                            database.insert("Douban", null, values);
+                            values.clear();
+                            database.setTransactionSuccessful();
+                            database.endTransaction();
 
-                        //发送广播，缓存主要内容
-                        Intent intent = new Intent("LOCAL_BROADCAST");
-                        intent.putExtra("type", CacheService.TYPE_DOUBAN);
-                        intent.putExtra("id", bean.getId());
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            //发送广播，缓存主要内容
+                            Intent intent = new Intent("LOCAL_BROADCAST");
+                            intent.putExtra("type", CacheService.TYPE_DOUBAN);
+                            intent.putExtra("id", bean.getId());
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }
                     }
+
+                    view.showResults(beans);
+                    view.stopLoading();
                 }
 
-                view.showResults(beans);
-                view.stopLoading();
+                @Override
+                public void onError(VolleyError error) {
+                    view.stopLoading();
+                }
+            });
+        } else {
+            Cursor cursor = database.query("Douban", null, null, null, null, null, null);
+            if (cursor.moveToFirst()){
+                do {
+                    Douban.PostsBean postsBean = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_news")), Douban.PostsBean.class);
+                    beans.add(postsBean);
+                } while (cursor.moveToNext());
             }
-
-            @Override
-            public void onError(VolleyError error) {
-                view.stopLoading();
-            }
-        });
+            cursor.close();
+            view.showResults(beans);
+            view.stopLoading();
+        }
     }
 
     @Override

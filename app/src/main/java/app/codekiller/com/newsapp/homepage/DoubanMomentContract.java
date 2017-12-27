@@ -13,7 +13,7 @@ import app.codekiller.com.newsapp.bean.BaseBean;
 public interface DoubanMomentContract {
     interface View extends BaseView<Presenter> {
 
-        void startLoading();
+        void showLoading();
 
         void stopLoading();
 

@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 
 import app.codekiller.com.newsapp.app.VolleySingleton;
 import app.codekiller.com.newsapp.bean.ZhihuDailyContent;
+import app.codekiller.com.newsapp.bean.ZhihuDailyStory;
 import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.util.Api;
 
@@ -57,6 +59,16 @@ public class CacheService extends Service {
         return null;
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
+    }
+
     /**
      * 网络请求id对应的知乎日报的内容主体
      * 当type为0时，存储body中的数据
@@ -64,106 +76,95 @@ public class CacheService extends Service {
      * @param id 知乎日报内容对应的id
      */
     private void startZhihuCache(final int id){
-        Cursor cursor = database.query("Zhihu", null, "id=?", new String[]{"1"}, null, null, null);
-        while (cursor.moveToNext()){
-            if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == id && cursor.getString(cursor.getColumnIndex("zhihu_content")).equals("")){
-                StringRequest request = new StringRequest(Request.Method.GET, Api.ZHIHU_NEWS + id, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        ZhihuDailyContent content = gson.fromJson(response, ZhihuDailyContent.class);
-                        if (content.getType() == 1){
-                            StringRequest request2 = new StringRequest(Request.Method.GET, content.getShare_url(), new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    database.beginTransaction();
-                                    ContentValues values = new ContentValues();
-                                    values.put("zhihu_content", response);
-                                    database.update("Zhihu", values, "zhihu_id=?", new String[]{String.valueOf(id)});
-                                    database.endTransaction();
-                                    values.clear();
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
+        Cursor cursor = database.query("Zhihu", null, "zhihu_id=?", new String[]{String.valueOf(id)}, null, null, null);
+        cursor.moveToFirst();
+        if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == id && cursor.getString(cursor.getColumnIndex("zhihu_content")).equals("")){
+            StringRequest request = new StringRequest(Request.Method.GET, Api.ZHIHU_NEWS + id, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    ZhihuDailyStory content = gson.fromJson(response, ZhihuDailyStory.class);
+                    if (content.getType() == 1){
+                        StringRequest request2 = new StringRequest(Request.Method.GET, content.getShare_url(), new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                ContentValues values = new ContentValues();
+                                values.put("zhihu_content", response);
+                                database.update("Zhihu", values, "zhihu_id=?", new String[]{String.valueOf(id)});
+                                values.clear();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                                }
-                            });
-                            request2.setTag(TAG);
-                            VolleySingleton.getVolleySingleton(CacheService.this).addToRequestQueue(request2);
-                        } else {
-                            database.beginTransaction();
-                            ContentValues values = new ContentValues();
-                            values.put("zhihu_content", response);
-                            database.update("Zhihu", values, "zhihu_id=?", new String[]{String.valueOf(id)});
-                            database.endTransaction();
-                            values.clear();
-                        }
+                            }
+                        });
+                        request2.setTag(TAG);
+                        VolleySingleton.getVolleySingleton(CacheService.this).addToRequestQueue(request2);
+                    } else {
+                        ContentValues values = new ContentValues();
+                        values.put("zhihu_content", response);
+                        database.update("Zhihu", values, "zhihu_id=?", new String[]{String.valueOf(id)});
+                        values.clear();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
-                request.setTag(TAG);
-                VolleySingleton.getVolleySingleton(this).addToRequestQueue(request);
-            }
+                }
+            });
+            request.setTag(TAG);
+            VolleySingleton.getVolleySingleton(CacheService.this).addToRequestQueue(request);
         }
         cursor.close();
     }
 
     private void startGuokrCache(final int id) {
         Cursor cursor = database.query("Guokr", null, "guokr_id=?", new String[]{String.valueOf(id)}, null, null, null);
-        while (cursor.moveToNext()){
-            if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == id && cursor.getString(cursor.getColumnIndex("guokr_content")).equals("")){
-                StringRequest request = new StringRequest(Request.Method.GET, Api.GUOKR_ARTICLES + id, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        database.beginTransaction();
-                        ContentValues values = new ContentValues();
-                        values.put("guokr_content", response);
-                        database.update("Guokr", values, "guokr_id=?", new String[]{String.valueOf(id)});
-                        values.clear();
-                        database.endTransaction();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+        cursor.moveToFirst();
+        if (cursor.getInt(cursor.getColumnIndex("guokr_id")) == id && cursor.getString(cursor.getColumnIndex("guokr_content")).equals("")){
+            StringRequest request = new StringRequest(Api.GUOKR_ARTICLE_LINK_V1 + id, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    ContentValues values = new ContentValues();
+                    values.put("guokr_content", response);
+                    database.update("Guokr", values, "guokr_id=?", new String[]{String.valueOf(id)});
+                    values.clear();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+                }
+            });
 
-                request.setTag(TAG);
-                VolleySingleton.getVolleySingleton(this).addToRequestQueue(request);
-            }
+            request.setTag(TAG);
+            VolleySingleton.getVolleySingleton(CacheService.this).addToRequestQueue(request);
         }
         cursor.close();
     }
 
     private void startDoubanCache(final int id) {
         Cursor cursor = database.query("Douban", null, "douban_id=?", new String[]{String.valueOf(id)}, null, null, null);
-        while (cursor.moveToNext()){
-            if (cursor.getInt(cursor.getColumnIndex("douban_id")) == id && cursor.getString(cursor.getColumnIndex("douban_content")).equals("")){
-                StringRequest request = new StringRequest(Request.Method.GET, Api.DOUBAN_ARTICLE_DETAIL + id, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        database.beginTransaction();
-                        ContentValues values = new ContentValues();
-                        values.put("douban_content", response);
-                        database.update("Douban", values, "douban_id=?", new String[]{String.valueOf(id)});
-                        values.clear();
-                        database.endTransaction();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+        cursor.moveToFirst();
+        if (cursor.getInt(cursor.getColumnIndex("douban_id")) == id && cursor.getString(cursor.getColumnIndex("douban_content")).equals("")){
+            StringRequest request = new StringRequest(Api.DOUBAN_ARTICLE_DETAIL + id, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    ContentValues values = new ContentValues();
+                    values.put("douban_content", response);
+                    database.update("Douban", values, "douban_id=?", new String[]{String.valueOf(id)});
+                    values.clear();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+                }
+            });
 
-                request.setTag(TAG);
-                VolleySingleton.getVolleySingleton(this).addToRequestQueue(request);
-            }
+            request.setTag(TAG);
+            VolleySingleton.getVolleySingleton(CacheService.this).addToRequestQueue(request);
         }
         cursor.close();
     }

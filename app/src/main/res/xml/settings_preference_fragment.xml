@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/basic_settings">
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:title="@string/auto_change_theme"
+            android:key="auto_change_theme"
+            android:defaultValue="false"
+            android:summary="@string/auto_change_theme" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/other_settings">
+
+        <android.support.v7.preference.Preference
+            android:title="@string/clear_image_cache"
+            android:key="clear_glide_cache"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

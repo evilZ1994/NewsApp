@@ -92,8 +92,10 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     }
 
     @Override
-    public void startLoading() {
-
+    public void showLoading() {
+        if (!refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(true);
+        }
     }
 
     @Override

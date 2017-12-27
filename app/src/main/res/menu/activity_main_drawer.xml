@@ -15,18 +15,25 @@
             android:enabled="true"
             android:icon="@drawable/ic_favorite_24dp"
             android:title="@string/favorites" />
+    </group>
 
+    <group android:enabled="true"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/change_theme"
             android:enabled="true"
             android:icon="@drawable/ic_brightness_medium_black_24px"
             android:title="Change Theme"/>
 
+        <item android:id="@+id/settings"
+            android:enabled="true"
+            android:icon="@drawable/ic_settings_black_24px"
+            android:title="@string/settings"/>
+
         <item
-            android:id="@+id/nav_info"
+            android:id="@+id/nav_about"
             android:enabled="true"
             android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="@string/info" />
-
+            android:title="@string/about" />
     </group>
 </menu>

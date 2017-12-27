@@ -22,6 +22,7 @@ import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.interfaze.OnStringListener;
 import app.codekiller.com.newsapp.service.CacheService;
 import app.codekiller.com.newsapp.util.Api;
+import app.codekiller.com.newsapp.util.NetworkState;
 
 /**
  * Created by R2D2 on 2017/12/20.
@@ -58,38 +59,52 @@ public class GuokrPresenter implements GuokrContract.Presenter{
         if (clearing){
             resultBeans.clear();
         }
-        model.load(Api.GUOKR_ARTICLES, new OnStringListener() {
-            @Override
-            public void onSuccess(String result) {
-                GuokrNews guokrNews = gson.fromJson(result, GuokrNews.class);
-                for (GuokrNews.ResultBean bean : guokrNews.getResult()){
-                    resultBeans.add(bean);
-                    if (!queryIfIdExists(bean.getId())){
-                        database.beginTransaction();
-                        ContentValues values = new ContentValues();
-                        values.put("guokr_id", bean.getId());
-                        values.put("guokr_news", gson.toJson(bean));
-                        values.put("guokr_content", "");
-                        database.insert("Guokr", null, values);
-                        database.setTransactionSuccessful();
-                        database.endTransaction();
+        if (NetworkState.networkConnected(context)) {
+            model.load(Api.GUOKR_ARTICLES, new OnStringListener() {
+                @Override
+                public void onSuccess(String result) {
+                    GuokrNews guokrNews = gson.fromJson(result, GuokrNews.class);
+                    for (GuokrNews.ResultBean bean : guokrNews.getResult()) {
+                        resultBeans.add(bean);
+                        if (!queryIfIdExists(bean.getId())) {
+                            database.beginTransaction();
+                            ContentValues values = new ContentValues();
+                            values.put("guokr_id", bean.getId());
+                            values.put("guokr_news", gson.toJson(bean));
+                            values.put("guokr_content", "");
+                            database.insert("Guokr", null, values);
+                            values.clear();
+                            database.setTransactionSuccessful();
+                            database.endTransaction();
 
-                        //发送广播，缓存主要内容
-                        Intent intent = new Intent("LOCAL_BROADCAST");
-                        intent.putExtra("type", CacheService.TYPE_GUOKR);
-                        intent.putExtra("id", bean.getId());
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                            //发送广播，缓存主要内容
+                            Intent intent = new Intent("LOCAL_BROADCAST");
+                            intent.putExtra("type", CacheService.TYPE_GUOKR);
+                            intent.putExtra("id", bean.getId());
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }
                     }
+                    view.showResults(resultBeans);
+                    view.stopLoading();
                 }
-                view.showResults(resultBeans);
-                view.stopLoading();
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                view.stopLoading();
+                @Override
+                public void onError(VolleyError error) {
+                    view.stopLoading();
+                }
+            });
+        }else {
+            Cursor cursor = database.query("Guokr", null, null, null, null, null, null );
+            if (cursor.moveToFirst()){
+                do {
+                    GuokrNews.ResultBean resultBean = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrNews.ResultBean.class);
+                    resultBeans.add(resultBean);
+                }while (cursor.moveToNext());
             }
-        });
+            cursor.close();
+            view.showResults(resultBeans);
+            view.stopLoading();
+        }
     }
 
     @Override
@@ -104,10 +119,11 @@ public class GuokrPresenter implements GuokrContract.Presenter{
 
     @Override
     public void startReading(int position) {
-        context.startActivity(new Intent(context, DetailActivity.class).putExtra("type", BeanType.TYPE_GUOKR)
+        Intent intent = new Intent(context, DetailActivity.class).putExtra("type", BeanType.TYPE_GUOKR)
                 .putExtra("id", resultBeans.get(position).getId())
                 .putExtra("title", resultBeans.get(position).getTitle())
-                .putExtra("coverUrl", resultBeans.get(position).getImages().get(0)));
+                .putExtra("coverUrl", ((GuokrNews.ResultBean)resultBeans.get(position)).getHeadline_img());
+        context.startActivity(intent);
     }
 
     @Override

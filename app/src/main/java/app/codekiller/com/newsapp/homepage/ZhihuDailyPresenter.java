@@ -133,13 +133,9 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     private boolean queryIfIdExist(int id){
-        Cursor cursor = database.query("Zhihu", null, null, null, null, null, null);
-        if (cursor.moveToFirst()){
-            do {
-                if (id == cursor.getInt(cursor.getColumnIndex("zhihu_id"))){
-                    return true;
-                }
-            }while (cursor.moveToNext());
+        Cursor cursor = database.query("Zhihu", null, "zhihu_id=?", new String[]{String.valueOf(id)}, null, null, null);
+        if (cursor.getCount() > 0){
+            return true;
         }
 
         return false;
@@ -157,11 +153,16 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void startReading(int position) {
-        context.startActivity(new Intent(context, DetailActivity.class)
+        Intent intent = new Intent(context, DetailActivity.class)
                 .putExtra("type", BeanType.TYPE_ZHIHU)
                 .putExtra("id", list.get(position).getId())
-                .putExtra("title", list.get(position).getTitle())
-                .putExtra("coverUrl", list.get(position).getImages().get(0)));
+                .putExtra("title", list.get(position).getTitle());
+        if (!list.get(position).getImages().isEmpty()){
+            intent.putExtra("coverUrl", list.get(position).getImages().get(0));
+        } else {
+            intent.putExtra("coverUrl", "");
+        }
+        context.startActivity(intent);
     }
 
     @Override

@@ -161,7 +161,9 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     @Override
     public void showLoading() {
-
+        if (!refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(true);
+        }
     }
 
     @Override

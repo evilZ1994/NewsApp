@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
@@ -265,7 +266,7 @@ public class DetailPresenter implements DetailContract.Presenter {
                             if (zhihuDailyStory.getBody() == null){
                                 view.showResultWithoutBody(zhihuDailyStory.getShare_url());
                             } else {
-                                view.showResult(zhihuDailyStory.getBody());
+                                view.showResult(convertZhihuContent(zhihuDailyStory.getBody()));
                             }
                             view.stopLoading();
                         }
@@ -278,9 +279,11 @@ public class DetailPresenter implements DetailContract.Presenter {
                     });
                 } else {
                     Cursor cursor = database.query("Zhihu", null, "zhihu_id=?", new String[]{String.valueOf(id)}, null, null, null);
+                    cursor.moveToFirst();
                     String content = cursor.getString(cursor.getColumnIndex("zhihu_content"));
                     zhihuDailyStory = gson.fromJson(content, ZhihuDailyStory.class);
                     view.showResult(convertZhihuContent(zhihuDailyStory.getBody()));
+                    cursor.close();
                 }
                 break;
             case TYPE_GUOKR:
@@ -288,7 +291,6 @@ public class DetailPresenter implements DetailContract.Presenter {
                     model.load(Api.GUOKR_ARTICLE_LINK_V1 + id, new OnStringListener() {
                         @Override
                         public void onSuccess(String result) {
-                            guokrStory = result;
                             convertGuokrContent(result);
                             view.showResult(guokrStory);
                             view.stopLoading();
@@ -301,10 +303,11 @@ public class DetailPresenter implements DetailContract.Presenter {
                     });
                 }else {
                     Cursor cursor = database.query("Guokr", null, "guokr_id=?", new String[]{String.valueOf(id)}, null, null, null);
+                    cursor.moveToFirst();
                     String content = cursor.getString(cursor.getColumnIndex("guokr_content"));
-                    guokrStory = content;
-                    convertGuokrContent(guokrStory);
+                    convertGuokrContent(content);
                     view.showResult(content);
+                    cursor.close();
                 }
                 break;
             case TYPE_DOUBAN:
@@ -325,9 +328,11 @@ public class DetailPresenter implements DetailContract.Presenter {
                     });
                 }else {
                     Cursor cursor = database.query("Douban", null, "douban_id=?", new String[]{String.valueOf(id)}, null, null, null);
+                    cursor.moveToFirst();
                     String content = cursor.getString(cursor.getColumnIndex("douban_content"));
-                    DoubanStory doubanStory = gson.fromJson(content, DoubanStory.class);
-                    view.showResult(doubanStory.getContent());
+                    doubanStory = gson.fromJson(content, DoubanStory.class);
+                    view.showResult(convertDoubanContent());
+                    cursor.close();
                 }
                 break;
         }

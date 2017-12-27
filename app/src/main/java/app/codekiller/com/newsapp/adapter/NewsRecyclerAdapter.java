@@ -17,6 +17,7 @@ import java.util.List;
 import app.codekiller.com.newsapp.R;
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.Douban;
+import app.codekiller.com.newsapp.bean.GuokrNews;
 import app.codekiller.com.newsapp.interfaze.OnRecyclerViewItemClickListener;
 
 /**
@@ -68,8 +69,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter {
                 if (thumbs.size()>0){
                     image = thumbs.get(0).getMedium().getUrl();
                 }
-            }else {
-                image = item.getImages().get(0);
+            }else if (type.equals(GUOKR)){
+                image = ((GuokrNews.ResultBean)item).getHeadline_img();
+            } else {
+                if (!item.getImages().isEmpty()) {
+                    image = item.getImages().get(0);
+                }
             }
             if (image == null){
                 ((NormalViewHolder)holder).itemImg.setImageResource(R.drawable.placeholder);
