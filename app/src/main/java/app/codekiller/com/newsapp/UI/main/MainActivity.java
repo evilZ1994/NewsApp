@@ -1,9 +1,8 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.main;
 
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -19,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.UI.settings.SettingsActivity;
+import app.codekiller.com.newsapp.UI.favorite.FavoritesFragment;
 import app.codekiller.com.newsapp.service.CacheService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{

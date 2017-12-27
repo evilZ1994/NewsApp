@@ -113,4 +113,6 @@
 
     <string name="auto_change_theme">Auto Change Theme</string>
     <string name="glide_cache_clear_done">Glide Cache Clear Done</string>
+    <string name="auto_theme_day_time">Time of Day Theme</string>
+    <string name="auto_theme_night_time">Time of Night Theme</string>
 </resources>

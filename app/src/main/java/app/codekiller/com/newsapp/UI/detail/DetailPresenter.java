@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.detail;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 
 import app.codekiller.com.newsapp.R;
 import app.codekiller.com.newsapp.bean.BeanType;
-import app.codekiller.com.newsapp.bean.Douban;
 import app.codekiller.com.newsapp.bean.DoubanStory;
 import app.codekiller.com.newsapp.bean.StringModelImpl;
 import app.codekiller.com.newsapp.bean.ZhihuDailyStory;

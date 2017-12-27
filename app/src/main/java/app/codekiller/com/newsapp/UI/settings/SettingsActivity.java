@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.settings;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;

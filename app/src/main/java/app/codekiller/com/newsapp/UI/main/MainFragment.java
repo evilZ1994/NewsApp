@@ -1,13 +1,11 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.main;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +19,12 @@ import java.util.List;
 import java.util.Random;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.UI.zhihu.ZhihuDailyFragment;
+import app.codekiller.com.newsapp.UI.zhihu.ZhihuDailyPresenter;
+import app.codekiller.com.newsapp.UI.douban.DoubanMomentFragment;
+import app.codekiller.com.newsapp.UI.douban.DoubanMomentPresenter;
+import app.codekiller.com.newsapp.UI.guokr.GuokrFragment;
+import app.codekiller.com.newsapp.UI.guokr.GuokrPresenter;
 import app.codekiller.com.newsapp.adapter.MainPagerAdapter;
 
 public class MainFragment extends Fragment {

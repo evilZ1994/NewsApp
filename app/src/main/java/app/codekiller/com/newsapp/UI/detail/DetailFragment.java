@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.detail;
 
 
 import android.os.Bundle;

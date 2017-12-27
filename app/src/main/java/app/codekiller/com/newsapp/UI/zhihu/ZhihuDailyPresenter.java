@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.zhihu;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import app.codekiller.com.newsapp.UI.detail.DetailActivity;
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.StringModelImpl;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_day"
+        android:text="@string/auto_theme_day_time"
+        android:textColor="@color/mdtp_white"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_down_white_24px"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TimePicker
+        android:id="@+id/time_picker_day"
+        android:visibility="visible"
+        android:background="@color/mdtp_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/text_night"
+        android:text="@string/auto_theme_night_time"
+        android:textColor="@color/mdtp_white"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_left_white_24px"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TimePicker
+        android:id="@+id/time_picker_night"
+        android:visibility="gone"
+        android:background="@color/mdtp_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/ok"
+        android:background="@color/mdtp_white"
+        android:text="@string/mdtp_ok"
+        android:textColor="@color/colorPrimaryText"
+        android:paddingTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.guokr;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,9 +11,9 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+import app.codekiller.com.newsapp.UI.detail.DetailActivity;
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.GuokrNews;

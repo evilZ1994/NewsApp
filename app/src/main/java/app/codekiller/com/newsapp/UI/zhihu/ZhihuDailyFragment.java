@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.zhihu;
 
 
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.UI.douban.DoubanMomentFragment;
 import app.codekiller.com.newsapp.adapter.MainPagerAdapter;
 import app.codekiller.com.newsapp.adapter.NewsRecyclerAdapter;
 import app.codekiller.com.newsapp.bean.BaseBean;

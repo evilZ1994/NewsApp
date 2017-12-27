@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.settings;
 
 import android.support.v7.preference.Preference;
 
@@ -32,9 +32,11 @@ public interface SettingsContract {
 
     interface Presenter extends BasePresenter {
 
-        void setAutoChangeTheme(Preference preference);
+        void setAutoChangeTheme(Preference preference, boolean isOpen);
 
         void cleanGlideCache();
+
+        void autoThemeTimePicked(long dayTime, long nightTime);
 
     }
 

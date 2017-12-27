@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="app.codekiller.com.newsapp.homepage.MainFragment">
+    tools:context="app.codekiller.com.newsapp.UI.main.MainFragment">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:orientation="vertical"

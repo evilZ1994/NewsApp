@@ -1,14 +1,13 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.settings;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import app.codekiller.com.newsapp.R;
@@ -34,11 +33,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         addPreferencesFromResource(R.xml.settings_preference_fragment);
         initViews(getView());
 
-        findPreference("auto_change_theme").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        findPreference("auto_change_theme").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
-                presenter.setAutoChangeTheme(preference);
-                return false;
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                presenter.setAutoChangeTheme(preference, (Boolean) newValue);
+                return true;
             }
         });
 

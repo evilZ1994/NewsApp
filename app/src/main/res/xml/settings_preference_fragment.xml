@@ -9,7 +9,7 @@
             android:title="@string/auto_change_theme"
             android:key="auto_change_theme"
             android:defaultValue="false"
-            android:summary="@string/auto_change_theme" />
+            android:summary="@string/auto_change_theme"/>
 
     </android.support.v7.preference.PreferenceCategory>
 

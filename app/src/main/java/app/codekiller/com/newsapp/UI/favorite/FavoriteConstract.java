@@ -1,6 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
-
-import android.view.View;
+package app.codekiller.com.newsapp.UI.favorite;
 
 import java.util.ArrayList;
 

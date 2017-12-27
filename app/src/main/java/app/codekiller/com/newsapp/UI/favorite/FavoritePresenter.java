@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.homepage;
+package app.codekiller.com.newsapp.UI.favorite;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import app.codekiller.com.newsapp.UI.detail.DetailActivity;
 import app.codekiller.com.newsapp.adapter.FavoritesRecyclerAdapter;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.Douban;
