@@ -50,6 +50,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
                 return false;
             }
         });
+
+        findPreference("clear_cache").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                presenter.clearCache();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -65,6 +73,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void showCleanGlideCacheDone() {
         Toast.makeText(getContext(), R.string.glide_cache_clear_done, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCacheClearDone() {
+        Toast.makeText(getContext(), R.string.cache_clear_done, Toast.LENGTH_SHORT).show();
     }
 
     @Override

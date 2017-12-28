@@ -28,6 +28,8 @@ public interface SettingsContract {
 
         void showCleanGlideCacheDone();
 
+        void showCacheClearDone();
+
         void autoThemeSetted();
     }
 
@@ -38,6 +40,8 @@ public interface SettingsContract {
         void cleanGlideCache();
 
         void autoThemeTimePicked(long dayTime, long nightTime);
+
+        void clearCache();
 
     }
 

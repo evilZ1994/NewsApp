@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">See The World</string>
 
     <string name="zhihu_daily">Zhihu Daily</string>
     <string name="guokr_handpick">Guokr Handpick</string>
@@ -36,7 +36,7 @@
     <string name="time_of_saving_articles">Time of Saving Articles</string>
     <string name="clear_image_cache">Clear Image Cache</string>
     <string name="clear_image_cache_successfully">Cache successfully cleared</string>
-    <string name="about">About</string>
+    <string name="about_us">About Us</string>
     <string name="version">Version:V3.3.0</string>
     <string name="rate">Rate</string>
     <string name="rate_desc">If you like the Paper Plane app, please do rate it</string>
@@ -112,7 +112,9 @@
     <!-- others end -->
 
     <string name="auto_change_theme">Auto Change Theme</string>
+    <string name="auto_change_theme_summary">Auto Change Day/Night Theme by Time</string>
     <string name="glide_cache_clear_done">Glide Cache Clear Done</string>
+    <string name="clear_cache">Clear Cache</string>
     <string name="auto_theme_day_time">Time of Day Theme</string>
     <string name="auto_theme_night_time">Time of Night Theme</string>
 
@@ -121,5 +123,6 @@
     <string name="name_lei">雷爽    S170201001</string>
     <string name="name_zhu">朱月新    S170201005</string>
     <string name="our_school">计算机科学与技术学院</string>
+    <string name="cache_clear_done">Cache Clear Done</string>
     <!-- infos end -->
 </resources>

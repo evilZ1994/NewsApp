@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_centerVertical="true"
         android:id="@+id/head_img"
         android:src="@drawable/fly_img"
         android:layout_width="100dp"
         android:layout_height="100dp" />
     <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/head_img"
         android:orientation="vertical"
+        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
@@ -26,4 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-</LinearLayout>
+    <ImageView
+        android:id="@+id/d_code"
+        android:src="@drawable/ic_2d_code"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+</RelativeLayout>

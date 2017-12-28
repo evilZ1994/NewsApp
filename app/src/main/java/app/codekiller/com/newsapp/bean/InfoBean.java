@@ -8,6 +8,7 @@ public class InfoBean {
     private String nameInfo;
     private String school;
     private int img;
+    private int codeImg;
 
     public String getNameInfo() {
         return nameInfo;
@@ -31,5 +32,13 @@ public class InfoBean {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+    public int getCodeImg() {
+        return codeImg;
+    }
+
+    public void setCodeImg(int codeImg) {
+        this.codeImg = codeImg;
     }
 }

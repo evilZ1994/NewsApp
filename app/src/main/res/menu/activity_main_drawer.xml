@@ -34,6 +34,6 @@
             android:id="@+id/nav_about"
             android:enabled="true"
             android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="@string/about" />
+            android:title="@string/about_us" />
     </group>
 </menu>

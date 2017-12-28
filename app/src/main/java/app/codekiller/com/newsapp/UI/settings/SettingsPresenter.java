@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatDelegate;
@@ -12,6 +13,7 @@ import android.support.v7.preference.Preference;
 
 import com.bumptech.glide.Glide;
 
+import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.service.DayThemeReceiver;
 import app.codekiller.com.newsapp.service.NightThemeReceiver;
 
@@ -27,6 +29,9 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
     private PendingIntent dayPI;
     private PendingIntent nightPI;
+
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase database;
 
     public static final int CLEAR_GLIDE_CACHE_DONE = 1;
     public static final int AUTO_THEME_DAY_FLAG = 0;
@@ -50,6 +55,8 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         view.setPresenter(this);
         dialog = new AutoThemeDialog(context, this);
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        databaseHelper = DatabaseHelper.getInstance(context);
+        database = databaseHelper.getWritableDatabase();
     }
 
     @Override
@@ -108,5 +115,13 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         alarmManager.setRepeating(AlarmManager.RTC, dayTime, intervelMillis, dayPI);
         alarmManager.setRepeating(AlarmManager.RTC, nightTime, intervelMillis, nightPI);
         dialog.dismiss();
+    }
+
+    @Override
+    public void clearCache() {
+        database.delete("Zhihu", null, null);
+        database.delete("Guokr", null, null);
+        database.delete("Douban", null, null);
+        view.showCacheClearDone();
     }
 }

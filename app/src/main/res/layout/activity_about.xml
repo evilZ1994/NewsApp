@@ -7,9 +7,20 @@
     android:orientation="vertical"
     tools:context="app.codekiller.com.newsapp.UI.about.AboutActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:title="@string/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
