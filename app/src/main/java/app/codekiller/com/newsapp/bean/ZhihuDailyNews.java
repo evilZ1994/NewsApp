@@ -7,8 +7,9 @@ import java.util.ArrayList;
  */
 
 public class ZhihuDailyNews{
+
     private String date;
-    private ArrayList<Question> stories;
+    private ArrayList<Story> stories;
 
     public String getDate() {
         return date;
@@ -18,15 +19,15 @@ public class ZhihuDailyNews{
         this.date = date;
     }
 
-    public ArrayList<Question> getStories() {
+    public ArrayList<Story> getStories() {
         return stories;
     }
 
-    public void setStories(ArrayList<Question> stories) {
+    public void setStories(ArrayList<Story> stories) {
         this.stories = stories;
     }
 
-    public class Question extends BaseBean{
+    public class Story extends BaseBean{
         private int type;
         private String ga_prefix;
 

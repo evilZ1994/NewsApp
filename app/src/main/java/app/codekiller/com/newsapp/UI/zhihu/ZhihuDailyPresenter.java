@@ -78,7 +78,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                         list.clear();
                     }
 
-                    for (ZhihuDailyNews.Question item : post.getStories()) {
+                    for (ZhihuDailyNews.Story item : post.getStories()) {
                         list.add(item);
                         if (!queryIfIdExist(item.getId())){
                             database.beginTransaction();
@@ -123,8 +123,8 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
             Cursor cursor = database.query("Zhihu", null, null, null, null, null, null);
             if (cursor.moveToFirst()){
                 do {
-                    ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
-                    list.add(question);
+                    ZhihuDailyNews.Story story = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Story.class);
+                    list.add(story);
                 } while (cursor.moveToNext());
             }
             cursor.close();

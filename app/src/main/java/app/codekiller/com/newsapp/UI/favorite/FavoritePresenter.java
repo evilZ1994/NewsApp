@@ -28,7 +28,7 @@ public class FavoritePresenter implements FavoriteConstract.Presenter {
     private SQLiteDatabase database;
     private DatabaseHelper helper;
 
-    private ArrayList<ZhihuDailyNews.Question> zhihuList;
+    private ArrayList<ZhihuDailyNews.Story> zhihuList;
     private ArrayList<GuokrNews.ResultBean> guokrList;
     private ArrayList<Douban.PostsBean> doubanList;
     private ArrayList<Integer> types;
@@ -61,8 +61,8 @@ public class FavoritePresenter implements FavoriteConstract.Presenter {
             types.add(FavoritesRecyclerAdapter.TYPE_ZHIHU_HEADER);
             if (cursor.moveToFirst()){
                 do {
-                    ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
-                    zhihuList.add(question);
+                    ZhihuDailyNews.Story story = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Story.class);
+                    zhihuList.add(story);
                     types.add(FavoritesRecyclerAdapter.TYPE_ZHIHU_NORMAL);
                 } while (cursor.moveToNext());
             }
@@ -101,21 +101,21 @@ public class FavoritePresenter implements FavoriteConstract.Presenter {
         Intent intent = new Intent(context, DetailActivity.class);
         switch (type){
             case TYPE_ZHIHU:
-                ZhihuDailyNews.Question question = zhihuList.get(position - 1);
+                ZhihuDailyNews.Story story = zhihuList.get(position - types.indexOf(FavoritesRecyclerAdapter.TYPE_ZHIHU_HEADER) - 1);
                 intent.putExtra("type", type);
-                intent.putExtra("id", question.getId());
-                intent.putExtra("title", question.getTitle());
-                intent.putExtra("coverUrl", question.getImages().get(0));
+                intent.putExtra("id", story.getId());
+                intent.putExtra("title", story.getTitle());
+                intent.putExtra("coverUrl", story.getImages().get(0));
                 break;
             case TYPE_GUOKR:
-                GuokrNews.ResultBean resultBean = guokrList.get(position - zhihuList.size() - 2);
+                GuokrNews.ResultBean resultBean = guokrList.get(position - types.indexOf(FavoritesRecyclerAdapter.TYPE_GUOKR_HEADER) - 1);
                 intent.putExtra("type", type);
                 intent.putExtra("id", resultBean.getId());
                 intent.putExtra("title", resultBean.getTitle());
                 intent.putExtra("coverUrl", resultBean.getHeadline_img());
                 break;
             case TYPE_DOUBAN:
-                Douban.PostsBean postsBean = doubanList.get(position - zhihuList.size() - guokrList.size() - 3);
+                Douban.PostsBean postsBean = doubanList.get(position - types.indexOf(FavoritesRecyclerAdapter.TYPE_DOUBAN_HEADER) - 1);
                 intent.putExtra("type", type);
                 intent.putExtra("id", postsBean.getId());
                 intent.putExtra("title", postsBean.getTitle());

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,9 @@ public class AboutActivity extends AppCompatActivity {
         adapter.setOnCodeViewClickListener(new OnCodeViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                new DCodeDialog(AboutActivity.this, infoBeans.get(position).getCodeImg()).show();
+                DCodeDialog dCodeDialog = new DCodeDialog(AboutActivity.this, infoBeans.get(position).getCodeImg());
+                dCodeDialog.show();
+                dCodeDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

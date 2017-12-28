@@ -28,7 +28,7 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter{
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<ZhihuDailyNews.Question> zhihuList;
+    private List<ZhihuDailyNews.Story> zhihuList;
     private List<GuokrNews.ResultBean> guokrList;
     private List<Douban.PostsBean> doubanList;
     private List<Integer> types;
@@ -42,7 +42,7 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter{
     public static final int TYPE_DOUBAN_NORMAL = 4;
     public static final int TYPE_DOUBAN_HEADER = 5;
 
-    public FavoritesRecyclerAdapter(Context context, ArrayList<ZhihuDailyNews.Question> zhihuList,
+    public FavoritesRecyclerAdapter(Context context, ArrayList<ZhihuDailyNews.Story> zhihuList,
                                     ArrayList<GuokrNews.ResultBean> guokrList,
                                     ArrayList<Douban.PostsBean> doubanList,
                                     ArrayList<Integer> types){
@@ -69,21 +69,21 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter{
                 ((TypeViewHolder)holder).textView.setText(context.getResources().getString(R.string.zhihu_daily));
                 break;
             case TYPE_ZHIHU_NORMAL:
-                ZhihuDailyNews.Question question = zhihuList.get(position - 1);
+                ZhihuDailyNews.Story story = zhihuList.get(position - types.indexOf(TYPE_ZHIHU_HEADER) - 1);
                 Glide.with(context)
-                        .load(question.getImages().get(0))
+                        .load(story.getImages().get(0))
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .error(R.drawable.placeholder)
                         .centerCrop()
                         .into(((NormalViewHolder)holder).imageView);
-                ((NormalViewHolder)holder).textView.setText(question.getTitle());
+                ((NormalViewHolder)holder).textView.setText(story.getTitle());
                 break;
             case TYPE_GUOKR_HEADER:
                 ((TypeViewHolder)holder).textView.setText(context.getResources().getString(R.string.guokr_handpick));
                 break;
             case TYPE_GUOKR_NORMAL:
-                GuokrNews.ResultBean resultBean = guokrList.get(position- zhihuList.size() - 2);
+                GuokrNews.ResultBean resultBean = guokrList.get(position- types.indexOf(TYPE_GUOKR_HEADER) - 1);
                 Glide.with(context)
                         .load(resultBean.getHeadline_img_tb())
                         .placeholder(R.drawable.placeholder)
@@ -97,7 +97,7 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter{
                 ((TypeViewHolder)holder).textView.setText(context.getResources().getString(R.string.douban_moment));
                 break;
             case TYPE_DOUBAN_NORMAL:
-                Douban.PostsBean postsBean = doubanList.get(position - zhihuList.size() - guokrList.size() - 3);
+                Douban.PostsBean postsBean = doubanList.get(position - types.indexOf(TYPE_DOUBAN_HEADER) - 1);
                 List<Douban.PostsBean.ThumbsBean> thumbsBean = postsBean.getThumbs();
                 String image = "";
                 if (thumbsBean.size() > 0){

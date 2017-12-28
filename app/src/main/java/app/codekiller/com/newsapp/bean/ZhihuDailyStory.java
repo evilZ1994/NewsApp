@@ -84,5 +84,4 @@ public class ZhihuDailyStory {
     public void setCss(ArrayList<String> css) {
         this.css = css;
     }
-
 }

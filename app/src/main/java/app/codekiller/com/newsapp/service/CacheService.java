@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
 import app.codekiller.com.newsapp.app.VolleySingleton;
-import app.codekiller.com.newsapp.bean.ZhihuDailyContent;
 import app.codekiller.com.newsapp.bean.ZhihuDailyStory;
 import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.util.Api;

@@ -55,7 +55,7 @@ public class FavoritesFragment extends Fragment implements FavoriteConstract.Vie
     }
 
     @Override
-    public void showResults(ArrayList<ZhihuDailyNews.Question> zhihuList, ArrayList<GuokrNews.ResultBean> guokrList, ArrayList<Douban.PostsBean> doubanList, ArrayList<Integer> types) {
+    public void showResults(ArrayList<ZhihuDailyNews.Story> zhihuList, ArrayList<GuokrNews.ResultBean> guokrList, ArrayList<Douban.PostsBean> doubanList, ArrayList<Integer> types) {
         if (adapter == null){
             adapter = new FavoritesRecyclerAdapter(getContext(), zhihuList, guokrList, doubanList, types);
             adapter.setOnRecyclerItemClickListener(new OnRecyclerViewItemClickListener() {

@@ -1,5 +1,6 @@
 package app.codekiller.com.newsapp.UI.about;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,7 @@ import app.codekiller.com.newsapp.R;
  * Created by Lollipop on 2017/12/28.
  */
 
-public class DCodeDialog extends AlertDialog {
+public class DCodeDialog extends Dialog {
     private int codeImg;
     private Context context;
     private ImageView imageView;

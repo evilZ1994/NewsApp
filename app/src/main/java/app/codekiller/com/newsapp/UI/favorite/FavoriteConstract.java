@@ -15,7 +15,7 @@ import app.codekiller.com.newsapp.bean.ZhihuDailyNews;
 
 public interface FavoriteConstract {
     interface View extends BaseView<Presenter>{
-        void showResults(ArrayList<ZhihuDailyNews.Question> zhihuList,
+        void showResults(ArrayList<ZhihuDailyNews.Story> zhihuList,
                          ArrayList<GuokrNews.ResultBean> guokrList,
                          ArrayList<Douban.PostsBean> doubanList,
                          ArrayList<Integer> types);
