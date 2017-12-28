@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import app.codekiller.com.newsapp.BaseActivity;
 import app.codekiller.com.newsapp.R;
 import app.codekiller.com.newsapp.bean.BeanType;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
     private DetailFragment detailFragment;
 
     @Override

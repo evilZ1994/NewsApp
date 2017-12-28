@@ -4,8 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.Preference;
 
 import com.bumptech.glide.Glide;
@@ -57,7 +59,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
     @Override
     public void setAutoChangeTheme(Preference preference, boolean isOpen) {
-        if (isOpen){
+        /*if (isOpen){
             dialog.show();
         } else {
             if (dayPI != null){
@@ -66,7 +68,20 @@ public class SettingsPresenter implements SettingsContract.Presenter {
             if (nightPI != null){
                 alarmManager.cancel(nightPI);
             }
+        }*/
+        SharedPreferences sharedPreferences = context.getSharedPreferences("ThemeMode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (isOpen){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+            editor.putInt("night_mode", AppCompatDelegate.MODE_NIGHT_AUTO);
+            editor.apply();
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putInt("night_mode", AppCompatDelegate.MODE_NIGHT_NO);
+            editor.apply();
         }
+
+        view.autoThemeSetted();
     }
 
     @Override

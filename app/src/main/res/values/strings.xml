@@ -115,4 +115,11 @@
     <string name="glide_cache_clear_done">Glide Cache Clear Done</string>
     <string name="auto_theme_day_time">Time of Day Theme</string>
     <string name="auto_theme_night_time">Time of Night Theme</string>
+
+    <!-- infos -->
+    <string name="name_fly">李飞燕    S170201002</string>
+    <string name="name_lei">雷爽    S170201001</string>
+    <string name="name_zhu">朱月新    S170201005</string>
+    <string name="our_school">计算机科学与技术学院</string>
+    <!-- infos end -->
 </resources>

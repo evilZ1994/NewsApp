@@ -3,6 +3,7 @@ package app.codekiller.com.newsapp.UI.main;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,12 +18,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import app.codekiller.com.newsapp.BaseActivity;
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.UI.about.AboutActivity;
 import app.codekiller.com.newsapp.UI.settings.SettingsActivity;
 import app.codekiller.com.newsapp.UI.favorite.FavoritesFragment;
 import app.codekiller.com.newsapp.service.CacheService;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
     private MainFragment mainFragment;
     private FavoritesFragment favoritesFragment;
 
@@ -104,11 +107,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("ThemeMode", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
                                 == Configuration.UI_MODE_NIGHT_YES) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            editor.putInt("night_mode", AppCompatDelegate.MODE_NIGHT_NO);
+                            editor.apply();
                         } else {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            editor.putInt("night_mode", AppCompatDelegate.MODE_NIGHT_YES);
+                            editor.apply();
                         }
                         getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
                         recreate();
@@ -124,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case R.id.nav_about:
-
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
         return true;

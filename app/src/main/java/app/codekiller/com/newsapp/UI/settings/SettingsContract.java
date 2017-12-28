@@ -28,6 +28,7 @@ public interface SettingsContract {
 
         void showCleanGlideCacheDone();
 
+        void autoThemeSetted();
     }
 
     interface Presenter extends BasePresenter {

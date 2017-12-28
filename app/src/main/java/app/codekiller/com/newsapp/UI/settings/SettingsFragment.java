@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import app.codekiller.com.newsapp.R;
+import app.codekiller.com.newsapp.UI.main.MainActivity;
+import app.codekiller.com.newsapp.app.AppManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,5 +65,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void showCleanGlideCacheDone() {
         Toast.makeText(getContext(), R.string.glide_cache_clear_done, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void autoThemeSetted() {
+        AppManager.getInstance().recreateAll();
     }
 }
