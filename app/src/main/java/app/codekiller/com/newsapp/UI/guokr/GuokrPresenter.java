@@ -17,7 +17,7 @@ import app.codekiller.com.newsapp.UI.detail.DetailActivity;
 import app.codekiller.com.newsapp.bean.BaseBean;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.GuokrNews;
-import app.codekiller.com.newsapp.bean.StringModelImpl;
+import app.codekiller.com.newsapp.Model.StringModelImpl;
 import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.interfaze.OnStringListener;
 import app.codekiller.com.newsapp.service.CacheService;

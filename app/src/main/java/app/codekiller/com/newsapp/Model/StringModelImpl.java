@@ -1,4 +1,4 @@
-package app.codekiller.com.newsapp.bean;
+package app.codekiller.com.newsapp.Model;
 
 import android.content.Context;
 

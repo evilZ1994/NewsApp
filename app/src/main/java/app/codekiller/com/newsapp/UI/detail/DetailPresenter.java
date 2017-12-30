@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import app.codekiller.com.newsapp.R;
 import app.codekiller.com.newsapp.bean.BeanType;
 import app.codekiller.com.newsapp.bean.DoubanStory;
-import app.codekiller.com.newsapp.bean.StringModelImpl;
+import app.codekiller.com.newsapp.Model.StringModelImpl;
 import app.codekiller.com.newsapp.bean.ZhihuDailyStory;
 import app.codekiller.com.newsapp.db.DatabaseHelper;
 import app.codekiller.com.newsapp.interfaze.OnStringListener;

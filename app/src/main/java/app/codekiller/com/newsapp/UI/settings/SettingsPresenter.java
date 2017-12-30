@@ -119,9 +119,9 @@ public class SettingsPresenter implements SettingsContract.Presenter {
 
     @Override
     public void clearCache() {
-        database.delete("Zhihu", null, null);
-        database.delete("Guokr", null, null);
-        database.delete("Douban", null, null);
+        database.delete("Zhihu", "favorite=?", new String[]{"0"});
+        database.delete("Guokr", "favorite=?", new String[]{"0"});
+        database.delete("Douban", "favorite=?", new String[]{"0"});
         view.showCacheClearDone();
     }
 }
